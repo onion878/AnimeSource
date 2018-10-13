@@ -6,6 +6,27 @@ import (
 	"time"
 )
 
+func SaveIndex(name string, chapter string, url string, order int) structs.Index {
+	var index structs.Index
+	engine := GetCon()
+	index.Url = url
+	index.Id = NewKeyId()
+	index.Update = time.Now()
+	index.Total = 0
+	index.Name = name
+	index.Chapter = chapter
+	index.Index = order
+	engine.Insert(&index)
+	fmt.Printf("%+v\n", index)
+	return index
+}
+
+func GetAllIndex() []structs.Index {
+	var indexs []structs.Index
+	engine := GetCon()
+	engine.Where("flag = 0").OrderBy("`index` asc").Find(&indexs)
+	return indexs
+}
 func SaveOrUpdateIndex(name string, chapter string) structs.Index {
 	var index structs.Index
 	var indexs []structs.Index
