@@ -16,7 +16,7 @@ func main() {
 	utils.StartPool()
 	//getChapter("https://anime1.me/?cat=333")
 	getMenu()
-	getAllIndex()
+	//getAllIndex()
 	//utils.SaveOrUpdateIndex("onion", "1-13")
 }
 
@@ -42,6 +42,7 @@ func getMenu() {
 	})
 
 	c.OnRequest(func(r *colly.Request) {
+		r.Headers.Set("cookie", utils.GetCookie())
 		fmt.Println("Visiting", r.URL)
 	})
 
@@ -75,6 +76,7 @@ func getChapter(url string, pid string) {
 	})
 
 	c.OnRequest(func(r *colly.Request) {
+		r.Headers.Set("cookie", utils.GetCookie())
 		fmt.Println("Visiting", r.URL)
 	})
 	c.Visit(url)
@@ -101,6 +103,7 @@ func getChapterUrl(url string, name string, pid string, num int) {
 	})
 
 	c.OnRequest(func(r *colly.Request) {
+		r.Headers.Set("cookie", utils.GetCookie())
 		fmt.Println("Visiting", r.URL)
 	})
 	c.Visit(url)

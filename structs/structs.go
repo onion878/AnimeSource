@@ -23,6 +23,11 @@ type Chapter struct {
 	Created time.Time `xorm:"TIMESTAMP created"`
 }
 
+type Cookies struct {
+	Id    string `xorm:"not null pk int"`
+	Value string `xorm:"text"`
+}
+
 type UrlData struct {
 	Type    string `json:"type"`
 	File    string `json:"file"`

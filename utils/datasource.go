@@ -6,6 +6,13 @@ import (
 	"time"
 )
 
+func GetCookie() string {
+	var cookie []structs.Cookies
+	engine := GetCon()
+	engine.Where("id = 1").Find(&cookie)
+	return cookie[0].Value
+}
+
 func SaveIndex(name string, chapter string, url string, order int) structs.Index {
 	var index structs.Index
 	engine := GetCon()
@@ -27,6 +34,7 @@ func GetAllIndex() []structs.Index {
 	engine.Where("flag = 0").OrderBy("`index` asc").Find(&indexs)
 	return indexs
 }
+
 func SaveOrUpdateIndex(name string, chapter string) structs.Index {
 	var index structs.Index
 	var indexs []structs.Index
