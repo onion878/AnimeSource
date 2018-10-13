@@ -16,7 +16,7 @@ func main() {
 	utils.StartPool()
 	//getChapter("https://anime1.me/?cat=333")
 	getMenu()
-	//getAllIndex()
+	getAllIndex()
 	//utils.SaveOrUpdateIndex("onion", "1-13")
 }
 
