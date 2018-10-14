@@ -129,6 +129,13 @@ func getChapterUrl(url string, name string, pid string, num int) {
 		}
 	})
 
+	c.OnHTML("video source", func(e *colly.HTMLElement) {
+		file := e.Attr("src")
+		if len(file) > 0 {
+			utils.SaveChapter(name, pid, file, num)
+		}
+	})
+
 	c.OnRequest(func(r *colly.Request) {
 		r.Headers.Set("cookie", utils.GetCookie())
 		fmt.Println("Visiting", r.URL)
