@@ -106,13 +106,18 @@ func getChapterUrl(url string, name string, pid string, num int) {
 				some := 0
 				file := ""
 				for i := 0; i < len(arr); i++ {
-					hd, _ := strconv.Atoi(arr[i].Label[0 : len(arr[i].Label)-1])
-					if hd > some {
-						file = arr[i].File
+					s := arr[i].Label
+					if len(s) > 0 {
+						hd, _ := strconv.Atoi(s[0 : len(s)-1])
+						if hd > some {
+							file = arr[i].File
+						}
+						some = hd
 					}
-					some = hd
 				}
-				utils.SaveChapter(name, pid, file, num)
+				if len(file) > 0 {
+					utils.SaveChapter(name, pid, file, num)
+				}
 			}
 		} else {
 			start := strings.Index(data, `,file:"`)
