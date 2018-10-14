@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/gocolly/colly"
 	"log"
+	"strconv"
 	"strings"
 )
 
@@ -94,10 +95,31 @@ func getChapterUrl(url string, name string, pid string, num int) {
 			s = strings.Replace(s, ",label:", `,"label":`, -1)
 			var arr []structs.UrlData
 			_ = json.Unmarshal([]byte(s), &arr)
+			var flag = false
 			for i := 0; i < len(arr); i++ {
 				if arr[i].Default == "true" {
 					utils.SaveChapter(name, pid, arr[i].File, num)
+					flag = true
 				}
+			}
+			if !flag {
+				some := 0
+				file := ""
+				for i := 0; i < len(arr); i++ {
+					hd, _ := strconv.Atoi(arr[i].Label[0 : len(arr[i].Label)-1])
+					if hd > some {
+						file = arr[i].File
+					}
+					some = hd
+				}
+				utils.SaveChapter(name, pid, file, num)
+			}
+		} else {
+			start := strings.Index(data, `,file:"`)
+			end := strings.Index(data, `",controls:true`)
+			if start > 0 && end > 0 {
+				file := data[start+7 : end]
+				utils.SaveChapter(name, pid, file, num)
 			}
 		}
 	})
