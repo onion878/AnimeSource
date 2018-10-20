@@ -84,7 +84,7 @@ func getChapter(url string, pid string) {
 }
 
 func getChapterUrl(url string, name string, pid string, num int) {
-	c := colly.NewCollector()
+	c := colly.NewCollector(colly.Async(true))
 	// Find and visit all links
 	c.OnHTML("body script", func(e *colly.HTMLElement) {
 		data := e.Text
