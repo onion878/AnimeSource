@@ -11,7 +11,7 @@ import (
 var connect *xorm.Engine
 
 func StartPool() {
-	engine, err := xorm.NewEngine("mysql", "onion:1234@tcp(10.139.178.65:3306)/anime?charset=utf8")
+	engine, err := xorm.NewEngine("mysql", "onion:1234@tcp(localhost:3306)/anime?charset=utf8")
 	if err != nil {
 		fmt.Println(err)
 		return
